@@ -19,6 +19,7 @@ import {
   X,
   Wrench,
   Zap,
+  MessageCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -722,14 +723,16 @@ function ContactSection() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Create mailto link with form data
-    const subject = encodeURIComponent(`Quote Request from ${formData.name}`);
-    const body = encodeURIComponent(
-      `Name: ${formData.name}\nEmail: ${formData.email}\n\nJob Details:\n${formData.details}`
+    // Create WhatsApp message with form data
+    const message = encodeURIComponent(
+      `Hello! I have an enquiry from your website.\n\n` +
+      `*Name:* ${formData.name}\n` +
+      `*Email:* ${formData.email}\n\n` +
+      `*Job Details:*\n${formData.details}`
     );
     
-    // Open email client
-    window.location.href = `mailto:guniwantbhosale@gmail.com?subject=${subject}&body=${body}`;
+    // Open WhatsApp with pre-filled message (+91 9763286887)
+    window.open(`https://wa.me/919763286887?text=${message}`, "_blank");
     
     setIsSubmitted(true);
     setTimeout(() => {
@@ -788,6 +791,21 @@ function ContactSection() {
                 <div>
                   <div className="text-sm text-muted-foreground">Email</div>
                   <div className="font-semibold">guniwantbhosale@gmail.com</div>
+                </div>
+              </a>
+
+              <a
+                href="https://wa.me/919763286887"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-4 p-4 rounded-xl glass hover:bg-green-500/20 transition-colors group border border-green-500/20"
+              >
+                <div className="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center group-hover:bg-green-500/20 transition-colors">
+                  <MessageCircle className="w-6 h-6 text-green-500" />
+                </div>
+                <div>
+                  <div className="text-sm text-muted-foreground">WhatsApp</div>
+                  <div className="font-semibold text-green-500">+91 9763286887</div>
                 </div>
               </a>
 
@@ -903,15 +921,15 @@ function ContactSection() {
               <Button
                 type="submit"
                 size="lg"
-                className="w-full metallic-sheen"
+                className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold"
                 disabled={isSubmitted}
               >
                 {isSubmitted ? (
-                  "Opening Email Client..."
+                  "Opening WhatsApp..."
                 ) : (
                   <>
-                    Submit Inquiry
-                    <ArrowRight className="w-5 h-5 ml-2" />
+                    <MessageCircle className="w-5 h-5 mr-2" />
+                    Send Enquiry via WhatsApp
                   </>
                 )}
               </Button>
